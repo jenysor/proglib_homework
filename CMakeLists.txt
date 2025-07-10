@@ -14,8 +14,6 @@ add_subdirectory(rotating)
 add_executable(${PROJECT_NAME}_main main.cpp)
 target_link_libraries(${PROJECT_NAME}_main PUBLIC movable rotating)
 
-enable_testing()
-
 #file(GLOB_RECURSE TEST_SOURCE_FILES
 #        ${CMAKE_CURRENT_SOURCE_DIR}/test/*)
 #

@@ -13,4 +13,6 @@ file(GLOB_RECURSE TEST_SOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/test/*)
 
 add_executable(${PROJECT_NAME}_test ${TEST_SOURCE_FILES})
-target_link_libraries(${PROJECT_NAME}_test gtest)
+target_link_libraries(${PROJECT_NAME}_test ${PROJECT_NAME} gtest)
+enable_testing()
+add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}_test)
