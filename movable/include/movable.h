@@ -1,8 +1,14 @@
 #ifndef PROGLIB_HOMEWORK_MOVABLE_H
 #define PROGLIB_HOMEWORK_MOVABLE_H
 
-class IMovable {};
+#ifdef MOVABLE_EXPORTS
+#define MOVABLE_API __declspec(dllexport)
+#else
+#define MOVABLE_API __declspec(dllimport)
+#endif
 
-class Move : public IMovable{};
+class MOVABLE_API IMovable {};
+
+class MOVABLE_API Move : public IMovable{};
 
 #endif //PROGLIB_HOMEWORK_MOVABLE_H
