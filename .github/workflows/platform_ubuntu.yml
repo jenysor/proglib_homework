@@ -47,6 +47,10 @@ jobs:
         working-directory: build
         run: ls -la
 
+      - name: Set executable permissions
+        working-directory: build
+        run: chmod -R +x .
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -77,5 +81,7 @@ jobs:
 
       - name: Test
         working-directory: build
+        env:
+          LD_LIBRARY_PATH: ${{ github.workspace }}/build
 #        run: ctest --build-config Release
         run: ctest --build-config Release --verbose --output-on-failure
