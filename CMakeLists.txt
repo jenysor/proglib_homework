@@ -7,6 +7,8 @@ file(GLOB_RECURSE SOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h )
 
+include(CTest)
+
 add_subdirectory(googletest)
 add_subdirectory(movable)
 add_subdirectory(rotating)
