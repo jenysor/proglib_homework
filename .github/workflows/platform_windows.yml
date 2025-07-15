@@ -33,7 +33,7 @@ jobs:
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
       - name: Install GTest
-        run: choco install gtest -y
+        run: choco install gtest-dev -y
 
       - name: Configure CMake
         run: >
