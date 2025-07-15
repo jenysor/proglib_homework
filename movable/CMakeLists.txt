@@ -4,7 +4,7 @@ file(GLOB_RECURSE SOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h )
 
-add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
+add_library(${PROJECT_NAME} ${LIBRARY_TYPE} ${SOURCE_FILES})
 
 target_include_directories(${PROJECT_NAME}
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
