@@ -32,6 +32,9 @@ jobs:
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
+#      - name: Install GTest
+#        run: sudo apt-get install libgtest-dev
+
       - name: Configure CMake
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }}
@@ -43,34 +46,54 @@ jobs:
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-output-${{ matrix.os }}-${{ matrix.c_compiler }}
-          path: ${{ steps.strings.outputs.build-output-dir }}
-          retention-days: 1
+#      - name: Check build directory
+#        working-directory: build
+#        run: ls -la
 
-  test:
-    needs: build
-    runs-on: ${{ matrix.os }}
 
-    strategy:
-      fail-fast: false
-
-      matrix:
-        os: [ubuntu-latest]
-        build_type: [Release]
-        c_compiler: [gcc, clang]
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-output-${{ matrix.os }}-${{ matrix.c_compiler }}
-          path: build
+#      - name: Set executable permissions
+#        working-directory: build
+#        run: chmod ugo+rwx .
+#
+#      - name: Upload artifacts
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: build-output-${{ matrix.os }}-${{ matrix.c_compiler }}
+#          path: ${{ steps.strings.outputs.build-output-dir }}
+#          retention-days: 1
 
       - name: Test
         working-directory: build
-        run: ctest --build-config Release
+        env:
+          LD_LIBRARY_PATH: ${{ github.workspace }}/build
+        #        run: ctest --build-config Release
+        run: ctest --build-config Release --verbose --output-on-failure
+
+
+#  test:
+#    needs: build
+#    runs-on: ${{ matrix.os }}
+#
+#    strategy:
+#      fail-fast: false
+#
+#      matrix:
+#        os: [ubuntu-latest]
+#        build_type: [Release]
+#        c_compiler: [gcc, clang]
+#
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: Download artifacts
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: build-output-${{ matrix.os }}-${{ matrix.c_compiler }}
+#          path: build
+#
+#      - name: Test
+#        working-directory: build
+#        env:
+#          LD_LIBRARY_PATH: ${{ github.workspace }}/build
+##        run: ctest --build-config Release
+#        run: ctest --build-config Release --verbose --output-on-failure
