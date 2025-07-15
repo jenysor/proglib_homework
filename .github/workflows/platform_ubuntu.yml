@@ -52,7 +52,7 @@ jobs:
 
       - name: Set executable permissions
         working-directory: build
-        run: chmod -R +x .
+        run: chmod ugo+rwx .
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
