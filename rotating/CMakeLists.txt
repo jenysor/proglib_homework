@@ -18,9 +18,7 @@ set_target_properties(${PROJECT_NAME}_test PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/test
 )
 
-#find_package(GTest REQUIRED)
 include(GoogleTest)
 include(CTest)
-gtest_discover_tests(${PROJECT_NAME}_test
-        WORKING_DIRECTORY ${TEST_OUTPUT_PATH}
-)
+
+gtest_discover_tests(${PROJECT_NAME}_test)
