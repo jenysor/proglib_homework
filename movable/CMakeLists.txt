@@ -13,6 +13,21 @@ file(GLOB_RECURSE TEST_SOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/test/*)
 
 add_executable(${PROJECT_NAME}_test ${TEST_SOURCE_FILES})
-target_link_libraries(${PROJECT_NAME}_test ${PROJECT_NAME} gtest)
-enable_testing()
-add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}_test)
+target_link_libraries(${PROJECT_NAME}_test ${PROJECT_NAME} GTest::GTest GTest::Main)
+set_target_properties(${PROJECT_NAME}_test PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/test
+)
+
+find_package(GTest REQUIRED)
+include(GoogleTest)
+include(CTest)
+gtest_discover_tests(${PROJECT_NAME}_test
+        WORKING_DIRECTORY ${TEST_OUTPUT_PATH}
+)
+
+#add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}_test)
+
+
+
+
+
