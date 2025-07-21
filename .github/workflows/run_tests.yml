@@ -73,26 +73,53 @@ jobs:
         with:
           submodules: 'recursive'
 
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lcov
+
       - name: Set reusable strings
         id: strings
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+          echo "coverage-output-dir=${{ github.workspace }}/coverage_report" >> "$GITHUB_OUTPUT"
 
-      - name: Configure CMake
+      - name: Configure CMake with coverage
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }}
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -DCMAKE_CXX_FLAGS="--coverage -fprofile-arcs -ftest-coverage"
+          -DCMAKE_C_FLAGS="--coverage -fprofile-arcs -ftest-coverage"
           -S ${{ github.workspace }}
 
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
-      - name: Test
+      - name: Run tests with coverage
         working-directory: build
         env:
           LD_LIBRARY_PATH: ${{ github.workspace }}/build
-        run: ctest --build-config Release --verbose --output-on-failure
+        run: |
+          ctest --build-config Release --verbose --output-on-failure
+          # После тестов собираем данные покрытия
+          lcov --capture --directory . --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' '*/tests/*' --output-file coverage.filtered.info
+          genhtml coverage.filtered.info --output-directory ${{ steps.strings.outputs.coverage-output-dir }}
+          # Выводим краткую сводку в лог
+          lcov --summary coverage.filtered.info
 
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report-${{ matrix.c_compiler }}
+          path: ${{ github.workspace }}/coverage_report
+
+      # Опционально: загрузка в Codecov
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}  # Нужно создать в настройках репозитория
+          file: ${{ github.workspace }}/build/coverage.filtered.info
