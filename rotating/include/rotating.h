@@ -1,8 +1,24 @@
 #ifndef PROGLIB_HOMEWORK_ROTATING_H
 #define PROGLIB_HOMEWORK_ROTATING_H
 
-class IRotating {};
+#include <memory>
 
-class Rotate : public IRotating{};
+class IRotating
+{
+public:
+    virtual void getRotation()        = 0;
+    virtual void getAngularVelocity() = 0;
+    virtual void setRotation()        = 0;
 
-#endif //PROGLIB_HOMEWORK_ROTATING_H
+    virtual ~IRotating() = default;
+};
+
+class Rotate
+{
+public:
+    Rotate() = default;
+
+    static void rotate(std::shared_ptr<IRotating> object);
+};
+
+#endif // PROGLIB_HOMEWORK_ROTATING_H
