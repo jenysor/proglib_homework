@@ -9,9 +9,9 @@ bool Coordinates::operator==(const Coordinates& coords) const
 void Move::move(std::shared_ptr<IMovable> object)
 {
     auto pos = object->getPosition();
-    auto speed = object->getSpeed();
+    auto velocity = object->getVelocity();
 
-    auto res = pos + speed;
+    auto res = pos + velocity;
     std::cerr << "set position " << res << std::endl;
 
     object->setPosition(res);

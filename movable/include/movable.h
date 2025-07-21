@@ -27,7 +27,7 @@ class IMovable
 {
 public:
     virtual Coordinates getPosition() = 0;
-    virtual Coordinates getSpeed() = 0;
+    virtual Coordinates getVelocity() = 0;
     virtual void setPosition(const Coordinates& coords) = 0;
 
     virtual ~IMovable() = default;
