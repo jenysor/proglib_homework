@@ -108,11 +108,11 @@ jobs:
           LD_LIBRARY_PATH: ${{ github.workspace }}/build
         run: |
           ctest --build-config Release --verbose --output-on-failure
-          gcovr --exclude '.*/test/.*' --html-details ${{ steps.strings.outputs.coverage-output-dir }}/coverage_report.html
+          gcovr --exclude '.*/test/.*' --html-details coverage_report.html
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report-${{ matrix.c_compiler }}
-          path: ${{ github.workspace }}/coverage_report
+          name: coverage-report
+          path: build/coverage_report.html
 
