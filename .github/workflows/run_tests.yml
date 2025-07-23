@@ -109,6 +109,7 @@ jobs:
         run: |
           ctest --build-config Release --verbose --output-on-failure
           gcovr --exclude '.*/test/.*' --html-details coverage_report.html
+          gcovr --exclude '.*/test/.*' --print-summary
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
