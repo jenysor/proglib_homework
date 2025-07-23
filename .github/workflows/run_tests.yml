@@ -76,7 +76,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-13 g++-13 lcov
+          sudo apt-get install -y gcc-13 g++-13 gcovr-13
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 90
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 90
 
@@ -106,12 +106,7 @@ jobs:
           LD_LIBRARY_PATH: ${{ github.workspace }}/build
         run: |
           ctest --build-config Release --verbose --output-on-failure
-          # После тестов собираем данные покрытия
-          lcov --capture --directory . --output-file coverage.info --ignore-errors mismatch,unused --rc geninfo_unexecuted_blocks=1
-          lcov --remove coverage.info '/usr/*' '*/tests/*' --output-file coverage.filtered.info
-          genhtml coverage.filtered.info --output-directory ${{ steps.strings.outputs.coverage-output-dir }}
-          # Выводим краткую сводку в лог
-          lcov --summary coverage.filtered.info
+          gcovr --exclude '.*/test/.*' --html-details coverage_report.html
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
