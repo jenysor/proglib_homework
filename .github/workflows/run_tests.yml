@@ -107,7 +107,7 @@ jobs:
         run: |
           ctest --build-config Release --verbose --output-on-failure
           # После тестов собираем данные покрытия
-          lcov --capture --directory . --output-file coverage.info
+          lcov --capture --directory . --output-file coverage.info --ignore-errors mismatch,version --rc lcov_branch_coverage=1
           lcov --remove coverage.info '/usr/*' '*/tests/*' --output-file coverage.filtered.info
           genhtml coverage.filtered.info --output-directory ${{ steps.strings.outputs.coverage-output-dir }}
           # Выводим краткую сводку в лог
