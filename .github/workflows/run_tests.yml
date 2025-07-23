@@ -99,7 +99,7 @@ jobs:
 
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
-
+        
       - name: Run tests with coverage
         working-directory: build
         env:
