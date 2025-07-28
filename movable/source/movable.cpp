@@ -12,7 +12,6 @@ void Move::move(std::shared_ptr<IMovable> object)
     auto velocity = object->getVelocity();
 
     auto res = pos + velocity;
-    std::cerr << "set position " << res << std::endl;
 
     object->setPosition(res);
 }
