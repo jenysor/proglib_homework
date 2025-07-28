@@ -61,13 +61,12 @@ jobs:
           ctest --build-config Release --verbose --output-on-failure
           mkdir -p coverage_report
           gcovr \
-          --exclude 'CMakeFiles' \
-          --exclude 'googletest' \
-          --exclude './googletest/.*' \
-          --exclude 'test' \
-          --exclude 'build' \
+          --filter ${{ github.workspace }}/movable/ \
+          --filter ${{ github.workspace }}/rotating/ \
+          --exclude '.*test*' \
           --root ${{ github.workspace }} \
-          --html-details coverage_report/coverage_report.html
+          --html-details coverage_report/coverage_report.html \
+          --print-summary
           
 #      - name: Deploy to GitHub Pages
 #        uses: peaceiris/actions-gh-pages@v4
