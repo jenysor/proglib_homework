@@ -63,6 +63,7 @@ jobs:
           gcovr \
           --exclude 'CMakeFiles' \
           --exclude 'googletest' \
+          --exclude './googletest/.*' \
           --exclude 'test' \
           --exclude 'build' \
           --root ${{ github.workspace }} \
