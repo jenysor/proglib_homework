@@ -17,12 +17,6 @@ inline Coordinates operator+(const Coordinates& first, const Coordinates& second
     return Coordinates({first.x + second.x, first.y + second.y});
 }
 
-inline std::ostream& operator<<(std::ostream& out, const Coordinates& coords)
-{
-    out << "(" << coords.x << ", " << coords.y << ")";
-    return out;
-}
-
 class IMovable
 {
 public:
