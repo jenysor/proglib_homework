@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 3.30)
 set(PROJECT_NAME proglib_homework)
 project(${PROJECT_NAME})
 
+add_compile_options(--coverage -fprofile-arcs -ftest-coverage -O0)
+add_link_options(--coverage)
+
 if (UNIX)
     set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/lib)
