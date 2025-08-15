@@ -63,6 +63,7 @@ jobs:
           gcovr \
           --filter ${{ github.workspace }}/movable/ \
           --filter ${{ github.workspace }}/rotating/ \
+          --filter ${{ github.workspace }}/equations/ \
           --exclude '.*test*' \
           --root ${{ github.workspace }} \
           --html-details coverage_report/coverage_report.html \
