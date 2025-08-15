@@ -20,7 +20,7 @@ TEST(Equasion, Solve_OneRoot)
     ASSERT_EQ(etalon, Equation::solve(1,2,1));
 }
 
-TEST(Equasion, Solve_NullCoef)
+TEST(Equasion, Solve_NullCoefA)
 {
     ASSERT_THROW(Equation::solve(0,2,1), std::runtime_error);
 }
@@ -31,12 +31,32 @@ TEST(Equasion, Solve_TwoRoots_LessEps)
     ASSERT_EQ(etalon, Equation::solve(1,-2.0001, 1.0001));
 }
 
-TEST(Equasion, Solve_NanCoef)
+TEST(Equasion, Solve_NanCoef1)
 {
     ASSERT_THROW(Equation::solve(NAN, NAN, NAN), std::runtime_error);
 }
 
-TEST(Equasion, Solve_InfCoef)
+TEST(Equasion, Solve_NanCoef2)
+{
+    ASSERT_THROW(Equation::solve(1, NAN, NAN), std::runtime_error);
+}
+
+TEST(Equasion, Solve_NanCoef3)
+{
+    ASSERT_THROW(Equation::solve(1, 1, NAN), std::runtime_error);
+}
+
+TEST(Equasion, Solve_InfCoef1)
 {
     ASSERT_THROW(Equation::solve(INFINITY, INFINITY, INFINITY), std::runtime_error);
+}
+
+TEST(Equasion, Solve_InfCoef2)
+{
+    ASSERT_THROW(Equation::solve(1, INFINITY, INFINITY), std::runtime_error);
+}
+
+TEST(Equasion, Solve_InfCoef3)
+{
+    ASSERT_THROW(Equation::solve(1, 1, INFINITY), std::runtime_error);
 }
