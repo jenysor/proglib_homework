@@ -1,4 +1,4 @@
-project(command)
+project(commands)
 
 file(GLOB_RECURSE SOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp
@@ -22,7 +22,3 @@ include(GoogleTest)
 include(CTest)
 
 gtest_discover_tests(${PROJECT_NAME}_test)
-
-
-
-
