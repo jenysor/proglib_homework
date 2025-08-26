@@ -3,26 +3,25 @@
 #include "gtest/gtest.h"
 #include <queue>
 
-class ICommand {
+class MockCommand : public ICommand {
 public:
-    virtual void execute() = 0;
+    MOCK_METHOD(void, execute, (), (override));
 };
 
 class TestExceptions : public testing::Test {
 public:
-    ExeptionHandler handler;
-    std::queue<std::shared_ptr<ICommand>> queue;
+    std::unique_ptr<IExeptionHandler> handler;
+    std::shared_ptr<std::queue<std::shared_ptr<MockCommand>>> queue;
 };
 
 TEST_F(TestExceptions, d)
 {
-    auto cmd = queue.front();
-    queue.pop();
+    auto cmd = std::make_shared<MockCommand>();
 
     try {
         cmd->execute();
     }
     catch (const std::exception &e) {
-        handler.handleExeption();
+        handler->handleExeption(cmd, e);
     }
 }
