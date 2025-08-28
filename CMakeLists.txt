@@ -28,6 +28,7 @@ add_subdirectory(googletest)
 add_subdirectory(movable)
 add_subdirectory(rotating)
 add_subdirectory(commands)
+add_subdirectory(interfaces)
 
 add_executable(${PROJECT_NAME}_main main.cpp)
 target_link_libraries(${PROJECT_NAME}_main PUBLIC movable rotating commands)
