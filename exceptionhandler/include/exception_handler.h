@@ -10,8 +10,6 @@
 
 class IExeptionHandler {
 public:
-	[[nodiscard]] virtual bool canHandleException(const std::exception& e) const = 0;
-
 	virtual void handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const = 0;
 
 	virtual ~IExeptionHandler() = default;
@@ -20,8 +18,6 @@ public:
 class WriteExceptionToLogByQueueHandler : public IExeptionHandler {
 public:
 	explicit WriteExceptionToLogByQueueHandler(std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> q);
-
-	[[nodiscard]] bool canHandleException(const std::exception& e) const override;
 
 	void handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const override;
 
@@ -35,8 +31,6 @@ class RepeatCommandByQueueHandler : public IExeptionHandler {
 public:
 	explicit RepeatCommandByQueueHandler(std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> q);
 
-	[[nodiscard]] bool canHandleException(const std::exception& e) const override;
-
 	void handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const override;
 
 	~RepeatCommandByQueueHandler() override = default;
@@ -49,8 +43,6 @@ class RepeatAndWriteToLogHandler : public IExeptionHandler {
 public:
 	explicit RepeatAndWriteToLogHandler();
 
-	[[nodiscard]] bool canHandleException(const std::exception& e) const override;
-
 	void handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const override;
 
 	~RepeatAndWriteToLogHandler() override = default;
@@ -59,8 +51,6 @@ public:
 class RepeatTwiceAndWriteToLogHandler : public IExeptionHandler {
 public:
 	explicit RepeatTwiceAndWriteToLogHandler();
-
-	[[nodiscard]] bool canHandleException(const std::exception& e) const override;
 
 	void handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const override;
 
