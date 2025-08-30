@@ -6,11 +6,6 @@ WriteExceptionToLogByQueueHandler::WriteExceptionToLogByQueueHandler(
     queue(std::move(q))
 {}
 
-bool WriteExceptionToLogByQueueHandler::canHandleException(const std::exception& e) const
-{
-	return true;
-}
-
 void WriteExceptionToLogByQueueHandler::handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const
 {
 	queue->push(std::make_shared<WriteExceptionToLogCommand>(e));
@@ -20,11 +15,6 @@ RepeatCommandByQueueHandler::RepeatCommandByQueueHandler(std::shared_ptr<std::qu
     queue(std::move(q))
 {}
 
-bool RepeatCommandByQueueHandler::canHandleException(const std::exception& e) const
-{
-	return true;
-}
-
 void RepeatCommandByQueueHandler::handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const
 {
 	queue->push(std::make_shared<RepeatCommand>(cmd));
@@ -32,11 +22,6 @@ void RepeatCommandByQueueHandler::handleExeption(std::shared_ptr<ICommand> cmd, 
 
 RepeatAndWriteToLogHandler::RepeatAndWriteToLogHandler()
 {}
-
-bool RepeatAndWriteToLogHandler::canHandleException(const std::exception& e) const
-{
-	return true;
-}
 
 void RepeatAndWriteToLogHandler::handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const
 {
@@ -52,11 +37,6 @@ void RepeatAndWriteToLogHandler::handleExeption(std::shared_ptr<ICommand> cmd, c
 
 RepeatTwiceAndWriteToLogHandler::RepeatTwiceAndWriteToLogHandler()
 {}
-
-bool RepeatTwiceAndWriteToLogHandler::canHandleException(const std::exception& e) const
-{
-	return true;
-}
 
 void RepeatTwiceAndWriteToLogHandler::handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const
 {
