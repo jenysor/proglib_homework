@@ -60,9 +60,12 @@ bool RepeatTwiceAndWriteToLogHandler::canHandleException(const std::exception& e
 
 void RepeatTwiceAndWriteToLogHandler::handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const
 {
-	RepeatTwiceCommand repeatTwiceCmd(cmd);
-	repeatTwiceCmd.execute();
-
-	WriteExceptionToLogCommand logCmd(e);
-	logCmd.execute();
+    try {
+        RepeatTwiceCommand repeatTwiceCmd(cmd);
+        repeatTwiceCmd.execute();
+    }
+    catch(const std::exception& ex) {
+        WriteExceptionToLogCommand logCmd(e);
+        logCmd.execute();
+    }
 }
