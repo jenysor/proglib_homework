@@ -1,20 +1,5 @@
 #include "exception_handler.h"
-
 #include <utility>
-
-void HandlerPool::registerHandler(std::shared_ptr<IExeptionHandler> handler)
-{
-	handlers.push_back(handler);
-}
-
-void HandlerPool::handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const
-{
-	for(const auto& h: handlers) {
-		if(h->canHandleException(e)) {
-			h->handleExeption(cmd, e);
-		}
-	}
-}
 
 WriteExceptionToLogByQueueHandler::WriteExceptionToLogByQueueHandler(
     std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> q) :

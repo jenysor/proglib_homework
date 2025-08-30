@@ -1,7 +1,6 @@
-#include "exception_handler.h"
+#include "handler_pool.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include <queue>
 #include <queue>
 
 class MockCommand : public ICommand {

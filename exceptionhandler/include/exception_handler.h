@@ -25,18 +25,6 @@ public:
 	virtual ~IExeptionHandler() = default;
 };
 
-class HandlerPool {
-public:
-	void registerHandler(std::shared_ptr<IExeptionHandler> handler);
-
-	void handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const;
-
-	~HandlerPool() = default;
-
-private:
-	std::list<std::shared_ptr<IExeptionHandler>> handlers;
-};
-
 class WriteExceptionToLogByQueueHandler : public IExeptionHandler {
 public:
 	explicit WriteExceptionToLogByQueueHandler(std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> q);
