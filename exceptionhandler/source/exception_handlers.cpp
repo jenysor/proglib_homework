@@ -1,0 +1,51 @@
+#include "exception_handlers.h"
+#include <utility>
+
+WriteExceptionToLogByQueueHandler::WriteExceptionToLogByQueueHandler(
+    std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> q) :
+    queue(std::move(q))
+{}
+
+void WriteExceptionToLogByQueueHandler::handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const
+{
+	queue->push(std::make_shared<WriteExceptionToLogCommand>(e));
+}
+
+RepeatCommandByQueueHandler::RepeatCommandByQueueHandler(std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> q) :
+    queue(std::move(q))
+{}
+
+void RepeatCommandByQueueHandler::handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const
+{
+	queue->push(std::make_shared<RepeatCommand>(cmd));
+}
+
+RepeatAndWriteToLogHandler::RepeatAndWriteToLogHandler()
+{}
+
+void RepeatAndWriteToLogHandler::handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const
+{
+	try {
+		RepeatCommand repeatCmd(cmd);
+		repeatCmd.execute();
+	}
+	catch(const std::exception& ex) {
+		WriteExceptionToLogCommand logCmd(ex);
+		logCmd.execute();
+	}
+}
+
+RepeatTwiceAndWriteToLogHandler::RepeatTwiceAndWriteToLogHandler()
+{}
+
+void RepeatTwiceAndWriteToLogHandler::handleExeption(std::shared_ptr<ICommand> cmd, const std::exception& e) const
+{
+    try {
+        RepeatTwiceCommand repeatTwiceCmd(cmd);
+        repeatTwiceCmd.execute();
+    }
+    catch(const std::exception& ex) {
+        WriteExceptionToLogCommand logCmd(e);
+        logCmd.execute();
+    }
+}
