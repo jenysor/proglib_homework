@@ -14,4 +14,16 @@ public:
 	virtual ~IMoveCommandEndable() = default;
 };
 
+class EndMoveCommand : public ICommand {
+public:
+	explicit EndMoveCommand(std::shared_ptr<IUObject> obj, std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> q);
+
+	void execute() override;
+
+private:
+	std::shared_ptr<IUObject> movingObject{};
+	std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> queue{};
+};
+
+
 #endif // PROGLIB_HOMEWORK_MOVE_ENDABLE_H
