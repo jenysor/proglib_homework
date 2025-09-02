@@ -1,12 +1,6 @@
 #include "startable.h"
-
-MoveCommand::MoveCommand(std::shared_ptr<IUObject> obj) : movingObject(std::move(obj))
-{}
-
-void MoveCommand::execute()
-{
-	Move::move(std::make_shared<MovableAdapter>(movingObject));
-}
+#include "adapters.h"
+#include "move_command.h"
 
 StartMoveCommand::StartMoveCommand(std::shared_ptr<IUObject> obj, std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> q,
 		double velocity) :

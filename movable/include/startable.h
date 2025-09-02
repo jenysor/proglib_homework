@@ -2,8 +2,6 @@
 #define PROGLIB_HOMEWORK_MOVE_STARTABLE_H
 
 #include "interfaces.h"
-#include "adapters.h"
-#include "movable.h"
 #include <memory>
 #include <queue>
 
@@ -16,16 +14,6 @@ public:
 	virtual std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> getCommandQueue() const = 0;
 
 	virtual ~IMoveCommandStartable() = default;
-};
-
-class MoveCommand : public ICommand {
-public:
-	explicit MoveCommand(std::shared_ptr<IUObject> obj);
-
-	void execute() override;
-
-private:
-	std::shared_ptr<IUObject> movingObject{};
 };
 
 class StartMoveCommand : public ICommand {
