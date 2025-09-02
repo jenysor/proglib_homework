@@ -9,44 +9,36 @@
 
 class IMoveCommandStartable {
 public:
-	[[nodiscard]] virtual std::shared_ptr<IUObject> getMovingObject() const = 0;
+	virtual std::shared_ptr<IUObject> getMovingObject() const = 0;
 
-	[[nodiscard]] virtual int getVelocity() const = 0;
+	virtual int getVelocity() const = 0;
 
-	[[nodiscard]] virtual std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> getCommandQueue() const = 0;
+	virtual std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> getCommandQueue() const = 0;
 
 	virtual ~IMoveCommandStartable() = default;
 };
 
 class MoveCommand : public ICommand {
 public:
-	MoveCommand(std::shared_ptr<IUObject> obj) : movingObject(std::move(obj))
-	{}
+	explicit MoveCommand(std::shared_ptr<IUObject> obj);
 
-	void execute() override
-	{
-		// Move::move(movingObject);
-	}
+	void execute() override;
+
+private:
 	std::shared_ptr<IUObject> movingObject{};
 };
 
 class StartMoveCommand : public ICommand {
 public:
-	StartMoveCommand(std::shared_ptr<IUObject> obj, std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> q) :
-	    movingObject(std::move(obj)), queue(std::move(q))
-	{}
+	explicit StartMoveCommand(std::shared_ptr<IUObject> obj, std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> q,
+	                 double velocity);
 
-	void execute() override
-	{
-		VelocityAdapter adapter(movingObject);
-		adapter.setVelocity(1);
-
-		queue->push(std::make_shared<MoveCommand>(movingObject));
-	}
+	void execute() override;
 
 private:
 	std::shared_ptr<IUObject> movingObject{};
 	std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> queue{};
+	double velocity{0};
 };
 
 #endif // PROGLIB_HOMEWORK_MOVE_STARTABLE_H
