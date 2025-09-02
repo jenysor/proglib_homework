@@ -1,4 +1,4 @@
-project(commands)
+project(adapters)
 
 file(GLOB_RECURSE SOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp
