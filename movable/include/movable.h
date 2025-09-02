@@ -1,31 +1,8 @@
 #ifndef PROGLIB_HOMEWORK_MOVABLE_H
 #define PROGLIB_HOMEWORK_MOVABLE_H
 
+#include "interfaces.h"
 #include <memory>
-#include <ostream>
-
-struct Coordinates
-{
-    double x;
-    double y;
-
-    bool operator==(const Coordinates& coords) const;
-};
-
-inline Coordinates operator+(const Coordinates& first, const Coordinates& second)
-{
-    return Coordinates({first.x + second.x, first.y + second.y});
-}
-
-class IMovable
-{
-public:
-    virtual Coordinates getPosition() = 0;
-    virtual Coordinates getVelocity() = 0;
-    virtual void setPosition(const Coordinates& coords) = 0;
-
-    virtual ~IMovable() = default;
-};
 
 class Move
 {

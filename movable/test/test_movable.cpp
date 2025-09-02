@@ -5,15 +5,15 @@
 class MockMovableObject : public IMovable
 {
 public:
-    MOCK_METHOD(Coordinates, getPosition, (), (override));
-    MOCK_METHOD(Coordinates, getVelocity, (), (override));
-    MOCK_METHOD(void, setPosition, (const Coordinates& coords), (override));
+    MOCK_METHOD(double, getPosition, (), (override));
+    MOCK_METHOD(double, getVelocity, (), (override));
+    MOCK_METHOD(void, setPosition, (double position), (override));
 };
 
 TEST(TestMove, MovableObject_Move_Success)
 {
-    Coordinates startPosition{.x = 12.0, .y = 5.0};
-    Coordinates velocity{.x = -7.0, .y = 3.0};
+    double startPosition{12.0};
+    double velocity{ 3.0};
 
     auto etalonPosition = startPosition + velocity;
 
@@ -28,8 +28,8 @@ TEST(TestMove, MovableObject_Move_Success)
 
 TEST(TestMove, MovableObject_Move_ErrorGetVelocity)
 {
-    Coordinates startPosition{.x = 12.0, .y = 5.0};
-    Coordinates velocity{.x = -7.0, .y = 3.0};
+    double startPosition{ 5.0};
+    double velocity{-7.0};
 
     auto object = std::make_shared<MockMovableObject>();
 
@@ -47,7 +47,7 @@ TEST(TestMove, MovableObject_Move_ErrorGetVelocity)
 
 TEST(TestMove, MovableObject_Move_ErrorGetPosition)
 {
-    Coordinates startPosition{.x = 12.0, .y = 5.0};
+    double startPosition{12.0};
 
     auto object = std::make_shared<MockMovableObject>();
 
@@ -64,8 +64,8 @@ TEST(TestMove, MovableObject_Move_ErrorGetPosition)
 
 TEST(TestMove, MovableObject_Move_ErrorSetPosition)
 {
-    Coordinates startPosition{.x = 12.0, .y = 5.0};
-    Coordinates velocity{.x = -7.0, .y = 3.0};
+    double startPosition{ 5.0};
+    double velocity{-7.0};
 
     auto etalonPosition = startPosition + velocity;
 
