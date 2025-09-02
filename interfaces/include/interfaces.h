@@ -30,6 +30,8 @@ public:
 
 	virtual bool hasProperty(const std::string& key) const = 0;
 
+	virtual void removeProperty(const std::string& key) = 0;
+
 	virtual ~IUObject() = default;
 };
 
@@ -47,6 +49,8 @@ public:
 	virtual void setVelocity(double velocity) = 0;
 
 	virtual double getVelocity() const = 0;
+
+	virtual void removeVelocity() = 0;
 
 	virtual ~IVelocityChangeable() = default;
 };

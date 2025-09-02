@@ -28,6 +28,8 @@ public:
 
 	double getVelocity() const override;
 
+	void removeVelocity() override;
+
 private:
 	std::shared_ptr<IUObject> object;
 };

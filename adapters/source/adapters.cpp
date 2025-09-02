@@ -9,7 +9,7 @@ double MovableAdapter::getPosition()
 	if(object->hasProperty("position")) {
 		return std::stoi(object->getProperty("position"));
 	}
-		throw std::invalid_argument("can't get position");
+	throw std::invalid_argument("can't get position");
 }
 
 double MovableAdapter::getVelocity()
@@ -17,7 +17,7 @@ double MovableAdapter::getVelocity()
 	if(object->hasProperty("velocity")) {
 		return std::stoi(object->getProperty("velocity"));
 	}
-		throw std::invalid_argument("can't get velocity");
+	throw std::invalid_argument("can't get velocity");
 }
 
 void MovableAdapter::setPosition(double position)
@@ -38,7 +38,10 @@ double VelocityAdapter::getVelocity() const
 	if(object->hasProperty("velocity")) {
 		return std::stoi(object->getProperty("velocity"));
 	}
-	else {
-		throw std::invalid_argument("can't get velocity");
-	}
+	throw std::invalid_argument("can't get velocity");
+}
+
+void VelocityAdapter::removeVelocity()
+{
+	object->removeProperty("velocity");
 }

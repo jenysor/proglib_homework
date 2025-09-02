@@ -7,6 +7,7 @@ public:
 	MOCK_METHOD(void, setProperty, (const std::string&, const std::string&), (override));
 	MOCK_METHOD(std::string, getProperty, (const std::string&), (const override));
 	MOCK_METHOD(bool, hasProperty, (const std::string&), (const override));
+	MOCK_METHOD(void, removeProperty, (const std::string&), (override));
 };
 
 TEST(TestMovableAdapter, MovableAdapter_SetPosition_Success)
@@ -140,4 +141,17 @@ TEST(TestVelocityAdapter, VelocityAdapter_GetVelocity_ErrorGetVelocity)
 	VelocityAdapter adapter(object);
 
 	ASSERT_THROW(adapter.getVelocity(),std::invalid_argument);
+}
+
+TEST(TestVelocityAdapter, VelocityAdapter_RemoveVelocity_Success)
+{
+	std::string property{"velocity"};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, removeProperty(property));
+
+	VelocityAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.removeVelocity());
 }
