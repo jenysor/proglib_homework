@@ -7,7 +7,7 @@ MovableAdapter::MovableAdapter(std::shared_ptr<IUObject> obj) : object(obj)
 double MovableAdapter::getPosition()
 {
 	if(object->hasProperty("position")) {
-		return std::stoi(object->getProperty("position"));
+		return std::stod(object->getProperty("position"));
 	}
 	throw std::invalid_argument("can't get position");
 }
@@ -15,7 +15,7 @@ double MovableAdapter::getPosition()
 double MovableAdapter::getVelocity()
 {
 	if(object->hasProperty("velocity")) {
-		return std::stoi(object->getProperty("velocity"));
+		return std::stod(object->getProperty("velocity"));
 	}
 	throw std::invalid_argument("can't get velocity");
 }
@@ -36,7 +36,7 @@ void VelocityAdapter::setVelocity(double velocity)
 double VelocityAdapter::getVelocity() const
 {
 	if(object->hasProperty("velocity")) {
-		return std::stoi(object->getProperty("velocity"));
+		return std::stod(object->getProperty("velocity"));
 	}
 	throw std::invalid_argument("can't get velocity");
 }
