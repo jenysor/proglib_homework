@@ -12,6 +12,11 @@ public:
 	MOCK_METHOD(void, removeProperty, (const std::string&), (override));
 };
 
+class MockCommand : public ICommand {
+public:
+	MOCK_METHOD(void, execute, (), (override));
+};
+
 class TestMoveCommand : public testing::Test {
 public:
 	TestMoveCommand()
@@ -85,4 +90,39 @@ TEST_F(TestMoveCommand, EndMoveCommand_Execute_Success)
 	command.execute();
 
 	ASSERT_TRUE(queue->empty());
+}
+
+TEST_F(TestMoveCommand, EndMoveCommand_Execute_EmptyQueue)
+{
+	std::string property{"velocity"};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EndMoveCommand command(object, queue);
+
+	EXPECT_CALL(*object, removeProperty(property));
+
+	command.execute();
+
+	ASSERT_TRUE(queue->empty());
+}
+
+TEST_F(TestMoveCommand, EndMoveCommand_Execute_NotEmptyQueue)
+{
+	std::string property{"velocity"};
+
+	auto object = std::make_shared<MockUObject>();
+
+	queue->push(std::make_shared<MockCommand>());
+	queue->push(std::make_shared<MockCommand>());
+	queue->push(std::make_shared<MoveCommand>(object));
+	queue->push(std::make_shared<MockCommand>());
+
+	EndMoveCommand command(object, queue);
+
+	EXPECT_CALL(*object, removeProperty(property));
+
+	command.execute();
+
+	ASSERT_TRUE(queue->size() == 3);
 }
