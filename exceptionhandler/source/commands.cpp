@@ -1,4 +1,5 @@
 #include "commands.h"
+#include <iostream>
 
 WriteExceptionToLogCommand::WriteExceptionToLogCommand(std::exception e) : exception(std::move(e))
 {}

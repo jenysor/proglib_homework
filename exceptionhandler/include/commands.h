@@ -1,15 +1,8 @@
 #ifndef PROGLIB_HOMEWORK_COMMANDS_H
 #define PROGLIB_HOMEWORK_COMMANDS_H
 
-#include <iostream>
+#include "interfaces.h"
 #include <memory>
-
-class ICommand {
-public:
-    virtual void execute() = 0;
-
-    virtual ~ICommand() = default;
-};
 
 class WriteExceptionToLogCommand : public ICommand {
 public:
