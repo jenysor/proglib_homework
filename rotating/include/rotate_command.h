@@ -1,0 +1,6 @@
+#ifndef PROGLIB_HOMEWORK_ROTATE_COMMAND_H
+#define PROGLIB_HOMEWORK_ROTATE_COMMAND_H
+
+#include "rotate_command_interfaces.h"
+
+#endif //PROGLIB_HOMEWORK_ROTATE_COMMAND_H

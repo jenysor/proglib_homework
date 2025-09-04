@@ -1,10 +1,4 @@
 #include "movable.h"
-#include <iostream>
-
-bool Coordinates::operator==(const Coordinates& coords) const
-{
-    return x == coords.x && y == coords.y;
-}
 
 void Move::move(std::shared_ptr<IMovable> object)
 {
