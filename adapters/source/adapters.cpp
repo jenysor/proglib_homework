@@ -45,3 +45,24 @@ void VelocityAdapter::removeVelocity()
 {
 	object->removeProperty("velocity");
 }
+
+FuelAdapter::FuelAdapter(std::shared_ptr<IUObject> obj) : object(std::move(obj))
+{}
+
+double FuelAdapter::getFuel()
+{
+	if(object->hasProperty("fuel")) {
+		return std::stod(object->getProperty("fuel"));
+	}
+	throw std::invalid_argument("can't get fuel");
+}
+
+void FuelAdapter::setFuel(double fuel)
+{
+	object->setProperty("fuel", std::to_string(fuel));
+}
+
+void FuelAdapter::removeFuel()
+{
+	object->removeProperty("fuel");
+}

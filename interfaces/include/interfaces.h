@@ -3,8 +3,7 @@
 
 #include <string>
 
-class IMovable
-{
+class IMovable {
 public:
 	virtual double getPosition() = 0;
 
@@ -35,15 +34,6 @@ public:
 	virtual ~IUObject() = default;
 };
 
-// class IPositionChangeable {
-// public:
-// 	virtual void setPosition(double position) = 0;
-//
-// 	[[nodiscard]] virtual double getPosition() const = 0;
-//
-// 	virtual ~IPositionChangeable() = default;
-// };
-//
 class IVelocityChangeable {
 public:
 	virtual void setVelocity(double velocity) = 0;
@@ -54,14 +44,16 @@ public:
 
 	virtual ~IVelocityChangeable() = default;
 };
-//
-// class IAngularVelocityChangeable {
-// public:
-// 	virtual void setAngularVelocity(double angularVelocity) = 0;
-//
-// 	[[nodiscard]] virtual double getAngularVelocity() const = 0;
-//
-// 	virtual ~IAngularVelocityChangeable() = default;
-// };
-//
+
+class IFuelAdapter {
+public:
+	virtual double getFuel() = 0;
+
+	virtual void setFuel(double fuel) = 0;
+
+	virtual void removeFuel() = 0;
+
+	virtual ~IFuelAdapter() = default;
+};
+
 #endif // PROGLIB_HOMEWORK_INTERFACES_H

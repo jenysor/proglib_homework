@@ -155,3 +155,66 @@ TEST(TestVelocityAdapter, VelocityAdapter_RemoveVelocity_Success)
 
 	ASSERT_NO_THROW(adapter.removeVelocity());
 }
+
+TEST(TestFuelAdapter, FuelAdapter_GetFuel_Success)
+{
+	std::string property{"fuel"};
+	double value{11.4};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, hasProperty(property)).WillOnce(testing::Invoke([]() {
+		return true;
+	}));
+
+	EXPECT_CALL(*object, getProperty(property)).WillOnce(testing::Invoke([value]() {
+		return std::to_string(value);
+	}));
+
+	FuelAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.getFuel());
+}
+
+TEST(TestFuelAdapter, FuelAdapter_GetFuel_ErrorGetFuel)
+{
+	std::string property{"fuel"};
+	double value{11.4};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, hasProperty(property)).WillOnce(testing::Invoke([]() {
+		return false;
+	}));
+
+	FuelAdapter adapter(object);
+
+	ASSERT_THROW(adapter.getFuel(),std::invalid_argument);
+}
+
+TEST(TestFuelAdapter, FuelAdapter_SetFuel_Success)
+{
+	std::string property{"fuel"};
+	double value{11.4};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, setProperty(property, std::to_string(value)));
+
+	FuelAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.setFuel(value));
+}
+
+TEST(TestFuelAdapter, FuelAdapter_RemoveFuel_Success)
+{
+	std::string property{"fuel"};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, removeProperty(property));
+
+	FuelAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.removeFuel());
+}

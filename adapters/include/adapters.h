@@ -34,4 +34,18 @@ private:
 	std::shared_ptr<IUObject> object;
 };
 
+class FuelAdapter : public IFuelAdapter {
+public:
+	explicit FuelAdapter(std::shared_ptr<IUObject> obj);
+
+	double getFuel() override;
+
+	void setFuel(double fuel) override;
+
+	void removeFuel() override;
+
+private:
+	std::shared_ptr<IUObject> object;
+};
+
 #endif // PROGLIB_HOMEWORK_ADAPTERS_H
