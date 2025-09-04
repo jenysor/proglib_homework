@@ -64,6 +64,9 @@ jobs:
           --filter ${{ github.workspace }}/movable/ \
           --filter ${{ github.workspace }}/rotating/ \
           --filter ${{ github.workspace }}/adapters/ \
+          --filter ${{ github.workspace }}/equations/ \
+          --filter ${{ github.workspace }}/exceptionhandler/ \
+          --filter ${{ github.workspace }}/macrocommand/ \
           --exclude '.*test*' \
           --root ${{ github.workspace }} \
           --html-details coverage_report/coverage_report.html \
