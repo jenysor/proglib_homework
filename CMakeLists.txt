@@ -29,17 +29,16 @@ add_subdirectory(movable)
 add_subdirectory(rotating)
 add_subdirectory(adapters)
 add_subdirectory(interfaces)
+add_subdirectory(equations)
+add_subdirectory(exceptionhandler)
 
 add_executable(${PROJECT_NAME}_main main.cpp)
 target_link_libraries(${PROJECT_NAME}_main PUBLIC movable rotating adapters)
 
 target_link_directories(movable_test PRIVATE ${CMAKE_BINARY_DIR}/movable)
 target_link_directories(rotating_test PRIVATE ${CMAKE_BINARY_DIR}/rotating)
-target_link_directories(rotating_test PRIVATE ${CMAKE_BINARY_DIR}/adapters)
+target_link_directories(adapters_test PRIVATE ${CMAKE_BINARY_DIR}/adapters)
+target_link_directories(equations_test PRIVATE ${CMAKE_BINARY_DIR}/equations)
+target_link_directories(exceptionhandler_test PRIVATE ${CMAKE_BINARY_DIR}/exceptionhandler)
 
 enable_testing()
-
-#file(GLOB_RECURSE TEST_SOURCE_FILES
-#        ${CMAKE_CURRENT_SOURCE_DIR}/test/*)
-#
-#add_executable(${PROJECT_NAME}_test ${TEST_SOURCE_FILES})
