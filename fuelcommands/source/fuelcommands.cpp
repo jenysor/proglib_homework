@@ -19,3 +19,17 @@ void CheckFuelCommand::execute()
 		throw CommandException("not enough fuel");
 	}
 }
+
+BurnFuelCommand::BurnFuelCommand(std::shared_ptr<IUObject> obj) : movingObject(std::move(obj))
+{}
+
+void BurnFuelCommand::execute()
+{
+	VelocityAdapter velocityAdapter(movingObject);
+	auto velocity = velocityAdapter.getVelocity();
+
+	FuelAdapter fuelAdapter(movingObject);
+	auto fuel = fuelAdapter.getFuel();
+
+	fuelAdapter.setFuel(fuel - velocity);
+}
