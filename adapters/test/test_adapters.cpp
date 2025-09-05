@@ -218,3 +218,66 @@ TEST(TestFuelAdapter, FuelAdapter_RemoveFuel_Success)
 
 	ASSERT_NO_THROW(adapter.removeFuel());
 }
+
+TEST(TestInstantVelocityAdapter, InstantVelocityAdapter_GetInstantVelocity_Success)
+{
+	std::string property{"instantVelocity"};
+	double value{11.4};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, hasProperty(property)).WillOnce(testing::Invoke([]() {
+		return true;
+	}));
+
+	EXPECT_CALL(*object, getProperty(property)).WillOnce(testing::Invoke([value]() {
+		return std::to_string(value);
+	}));
+
+	InstantVelocityAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.getInstantVelocity());
+}
+
+TEST(TestInstantVelocityAdapter, InstantVelocityAdapter_GetInstantVelocity_ErrorGetInstantVelocity)
+{
+	std::string property{"instantVelocity"};
+	double value{11.4};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, hasProperty(property)).WillOnce(testing::Invoke([]() {
+		return false;
+	}));
+
+	InstantVelocityAdapter adapter(object);
+
+	ASSERT_THROW(adapter.getInstantVelocity(),std::invalid_argument);
+}
+
+TEST(TestInstantVelocityAdapter, InstantVelocityAdapter_SetInstantVelocity_Success)
+{
+	std::string property{"instantVelocity"};
+	double value{11.4};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, setProperty(property, std::to_string(value)));
+
+	InstantVelocityAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.setInstantVelocity(value));
+}
+
+TEST(TestInstantVelocityAdapter, InstantVelocityAdapter_RemoveInstantVelocity_Success)
+{
+	std::string property{"instantVelocity"};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, removeProperty(property));
+
+	InstantVelocityAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.removeInstantVelocity());
+}

@@ -56,4 +56,15 @@ public:
 	virtual ~IFuelAdapter() = default;
 };
 
+class IInstantVelocityChangeable {
+public:
+	virtual void setInstantVelocity(double velocity) = 0;
+
+	virtual double getInstantVelocity() const = 0;
+
+	virtual void removeInstantVelocity() = 0;
+
+	virtual ~IInstantVelocityChangeable() = default;
+};
+
 #endif // PROGLIB_HOMEWORK_INTERFACES_H

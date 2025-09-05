@@ -48,4 +48,18 @@ private:
 	std::shared_ptr<IUObject> object;
 };
 
+class InstantVelocityAdapter : public IInstantVelocityChangeable {
+	public:
+	explicit InstantVelocityAdapter(std::shared_ptr<IUObject> obj);
+
+	void setInstantVelocity(double velocity) override;
+
+	double getInstantVelocity() const override;
+
+	void removeInstantVelocity() override;
+
+private:
+	std::shared_ptr<IUObject> object;
+};
+
 #endif // PROGLIB_HOMEWORK_ADAPTERS_H
