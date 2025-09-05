@@ -87,3 +87,24 @@ void InstantVelocityAdapter::removeInstantVelocity()
 {
 	object->removeProperty("instantVelocity");
 }
+
+AngularVelocityAdapter::AngularVelocityAdapter(std::shared_ptr<IUObject> obj) : object(std::move(obj))
+{}
+
+void AngularVelocityAdapter::setAngularVelocity(double angularVelocity)
+{
+	object->setProperty("angularVelocity", std::to_string(angularVelocity));
+}
+
+double AngularVelocityAdapter::getAngularVelocity() const
+{
+	if(object->hasProperty("angularVelocity")) {
+		return std::stod(object->getProperty("angularVelocity"));
+	}
+	throw std::invalid_argument("can't get angular velocity");
+}
+
+void AngularVelocityAdapter::removeAngularVelocity()
+{
+	object->removeProperty("angularVelocity");
+}

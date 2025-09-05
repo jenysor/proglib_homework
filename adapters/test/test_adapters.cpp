@@ -281,3 +281,66 @@ TEST(TestInstantVelocityAdapter, InstantVelocityAdapter_RemoveInstantVelocity_Su
 
 	ASSERT_NO_THROW(adapter.removeInstantVelocity());
 }
+
+TEST(TestAngularVelocityAdapter, AngularVelocityAdapter_GetAngularVelocity_Success)
+{
+	std::string property{"angularVelocity"};
+	double value{11.4};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, hasProperty(property)).WillOnce(testing::Invoke([]() {
+		return true;
+	}));
+
+	EXPECT_CALL(*object, getProperty(property)).WillOnce(testing::Invoke([value]() {
+		return std::to_string(value);
+	}));
+
+	AngularVelocityAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.getAngularVelocity());
+}
+
+TEST(TestAngularVelocityAdapter, AngularVelocityAdapter_GetAngularVelocity_ErrorGetAngularVelocity)
+{
+	std::string property{"angularVelocity"};
+	double value{11.4};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, hasProperty(property)).WillOnce(testing::Invoke([]() {
+		return false;
+	}));
+
+	AngularVelocityAdapter adapter(object);
+
+	ASSERT_THROW(adapter.getAngularVelocity(),std::invalid_argument);
+}
+
+TEST(TestAngularVelocityAdapter, AngularVelocityAdapter_SetAngularVelocity_Success)
+{
+	std::string property{"angularVelocity"};
+	double value{11.4};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, setProperty(property, std::to_string(value)));
+
+	AngularVelocityAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.setAngularVelocity(value));
+}
+
+TEST(TestAngularVelocityAdapter, AngularVelocityAdapter_RemoveAngularVelocity_Success)
+{
+	std::string property{"angularVelocity"};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, removeProperty(property));
+
+	AngularVelocityAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.removeAngularVelocity());
+}

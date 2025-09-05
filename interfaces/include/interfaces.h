@@ -67,4 +67,15 @@ public:
 	virtual ~IInstantVelocityChangeable() = default;
 };
 
+class IAngularVelocityChangeable {
+public:
+	virtual void setAngularVelocity(double velocity) = 0;
+
+	virtual double getAngularVelocity() const = 0;
+
+	virtual void removeAngularVelocity() = 0;
+
+	virtual ~IAngularVelocityChangeable() = default;
+};
+
 #endif // PROGLIB_HOMEWORK_INTERFACES_H

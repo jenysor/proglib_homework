@@ -49,14 +49,28 @@ private:
 };
 
 class InstantVelocityAdapter : public IInstantVelocityChangeable {
-	public:
+public:
 	explicit InstantVelocityAdapter(std::shared_ptr<IUObject> obj);
 
-	void setInstantVelocity(double velocity) override;
+	void setInstantVelocity(double instantVelocity) override;
 
 	double getInstantVelocity() const override;
 
 	void removeInstantVelocity() override;
+
+private:
+	std::shared_ptr<IUObject> object;
+};
+
+class AngularVelocityAdapter : public IAngularVelocityChangeable {
+public:
+	explicit AngularVelocityAdapter(std::shared_ptr<IUObject> obj);
+
+	void setAngularVelocity(double angularVelocity) override;
+
+	double getAngularVelocity() const override;
+
+	void removeAngularVelocity() override;
 
 private:
 	std::shared_ptr<IUObject> object;
