@@ -1,5 +1,6 @@
 #include "macrocommand.h"
 #include "adapters.h"
+#include <cmath>
 
 MacroCommand::MacroCommand(std::shared_ptr<std::list<std::shared_ptr<ICommand>>> cmds) : commands(std::move(cmds))
 {}
@@ -17,11 +18,14 @@ CorrectInstantVelocityCommand::CorrectInstantVelocityCommand(std::shared_ptr<IUO
 
 void CorrectInstantVelocityCommand::execute()
 {
-	try {
-		// VelocityAdapter adapter(movingObject);
-		// auto velocity = adapter.getVelocity();
-	}
-	catch(const std::exception& e) {
-		return;
-	}
+	VelocityAdapter velocityAdapter(movingObject);
+	auto velocity = velocityAdapter.getVelocity();
+
+	AngularVelocityAdapter angVelocityAdapter(movingObject);
+	auto angVelocity = angVelocityAdapter.getAngularVelocity();
+
+	std::list insVelocity = {velocity * std::cos(angVelocity), -velocity * std::sin(angVelocity)};
+
+	InstantVelocityAdapter insVelocityAdapter(movingObject);
+	insVelocityAdapter.setInstantVelocity(insVelocity);
 }

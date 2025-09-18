@@ -107,3 +107,37 @@ TEST(MacroCommand, MacroFuelCommand_Execute_Success)
 
 	macroCommand.execute();
 }
+
+TEST(CorrectInstantVelocityCommand, CorrectInstantVelocityCommand_Execute_Success)
+{
+	double velocity{5.0};
+	double angularVelocity{1.0};
+
+	std::list etalonInsVelocity{2.701512, -4.207355};
+
+	auto object = std::make_shared<MockUObject>();
+
+	CorrectInstantVelocityCommand command(object);
+
+	EXPECT_CALL(*object, hasProperty("velocity")).WillOnce(testing::Invoke([]() {
+		return true;
+	}));
+
+	EXPECT_CALL(*object, getProperty("velocity")).WillOnce(testing::Invoke([velocity]() {
+		return std::to_string(velocity);
+	}));
+
+	EXPECT_CALL(*object, hasProperty("angularVelocity")).WillOnce(testing::Invoke([]() {
+		return true;
+	}));
+
+	EXPECT_CALL(*object, getProperty("angularVelocity")).WillOnce(testing::Invoke([angularVelocity]() {
+		return std::to_string(angularVelocity);
+	}));
+
+	std::string value =
+	    std::to_string(etalonInsVelocity.front()) + std::string(", ") + std::to_string(etalonInsVelocity.back());
+	EXPECT_CALL(*object, setProperty("instantVelocity", value));
+
+	ASSERT_NO_THROW(command.execute());
+}
