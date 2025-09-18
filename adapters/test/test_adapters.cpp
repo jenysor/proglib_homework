@@ -258,15 +258,28 @@ TEST(TestInstantVelocityAdapter, InstantVelocityAdapter_GetInstantVelocity_Error
 TEST(TestInstantVelocityAdapter, InstantVelocityAdapter_SetInstantVelocity_Success)
 {
 	std::string property{"instantVelocity"};
-	double value{11.4};
+	std::list<double> value{11.4, 1.1};
 
 	auto object = std::make_shared<MockUObject>();
 
-	EXPECT_CALL(*object, setProperty(property, std::to_string(value)));
+	std::string str = std::to_string(value.front()) + std::string(", ") + std::to_string(value.back());
+	EXPECT_CALL(*object, setProperty(property, str));
 
 	InstantVelocityAdapter adapter(object);
 
 	ASSERT_NO_THROW(adapter.setInstantVelocity(value));
+}
+
+TEST(TestInstantVelocityAdapter, InstantVelocityAdapter_SetInstantVelocity_ErrorSetInstantVelocity)
+{
+	std::string property{"instantVelocity"};
+	std::list<double> value{11.4};
+
+	auto object = std::make_shared<MockUObject>();
+
+	InstantVelocityAdapter adapter(object);
+
+	ASSERT_THROW(adapter.setInstantVelocity(value), std::invalid_argument);
 }
 
 TEST(TestInstantVelocityAdapter, InstantVelocityAdapter_RemoveInstantVelocity_Success)

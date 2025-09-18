@@ -2,6 +2,7 @@
 #define PROGLIB_HOMEWORK_INTERFACES_H
 
 #include <string>
+#include <list>
 
 class IMovable {
 public:
@@ -58,7 +59,7 @@ public:
 
 class IInstantVelocityChangeable {
 public:
-	virtual void setInstantVelocity(double velocity) = 0;
+	virtual void setInstantVelocity(std::list<double> velocity) = 0;
 
 	virtual double getInstantVelocity() const = 0;
 

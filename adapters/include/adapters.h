@@ -52,7 +52,7 @@ class InstantVelocityAdapter : public IInstantVelocityChangeable {
 public:
 	explicit InstantVelocityAdapter(std::shared_ptr<IUObject> obj);
 
-	void setInstantVelocity(double instantVelocity) override;
+	void setInstantVelocity(std::list<double> instantVelocity) override;
 
 	double getInstantVelocity() const override;
 

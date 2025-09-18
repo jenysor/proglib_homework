@@ -70,9 +70,14 @@ void FuelAdapter::removeFuel()
 InstantVelocityAdapter::InstantVelocityAdapter(std::shared_ptr<IUObject> obj) : object(std::move(obj))
 {}
 
-void InstantVelocityAdapter::setInstantVelocity(double instantVelocity)
+void InstantVelocityAdapter::setInstantVelocity(std::list<double> instantVelocity)
 {
-	object->setProperty("instantVelocity", std::to_string(instantVelocity));
+	if(instantVelocity.size() != 2) {
+		throw std::invalid_argument("can't set instant velocity");
+	}
+
+	std::string value = std::to_string(instantVelocity.front()) + std::string(", ") + std::to_string(instantVelocity.back());
+	object->setProperty("instantVelocity", value);
 }
 
 double InstantVelocityAdapter::getInstantVelocity() const
