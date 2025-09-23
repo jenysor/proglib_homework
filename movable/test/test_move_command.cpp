@@ -1,5 +1,5 @@
-#include "startable.h"
-#include "endable.h"
+#include "move_startable.h"
+#include "move_endable.h"
 #include "move_command.h"
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"

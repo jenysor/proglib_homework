@@ -16,4 +16,17 @@ public:
 	virtual ~IRotateCommandStartable() = default;
 };
 
+class StartRotateCommand : public ICommand {
+public:
+	explicit StartRotateCommand(std::shared_ptr<IUObject> obj, std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> q,
+					 double angVelocity);
+
+	void execute() override;
+
+private:
+	std::shared_ptr<IUObject> movingObject{};
+	std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> queue{};
+	double angVelocity{0};
+};
+
 #endif // PROGLIB_HOMEWORK_ROTATE_STARTABLE_H
