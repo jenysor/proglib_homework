@@ -15,6 +15,17 @@ public:
 	virtual ~IMovable() = default;
 };
 
+class IRotating {
+public:
+	virtual double getRotation() = 0;
+
+	virtual double getAngularVelocity() = 0;
+
+	virtual void setRotation(double rotation) = 0;
+
+	virtual ~IRotating() = default;
+};
+
 class ICommand {
 public:
 	virtual void execute() = 0;
