@@ -14,4 +14,16 @@ public:
 	virtual ~IRotateCommandEndable() = default;
 };
 
+class EndRotateCommand : public ICommand {
+public:
+	explicit EndRotateCommand(std::shared_ptr<IUObject> obj, std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> q);
+
+	void execute() override;
+
+private:
+	std::shared_ptr<IUObject> rotatingObject{};
+	std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> queue{};
+};
+
+
 #endif // PROGLIB_HOMEWORK_ROTATE_ENDABLE_H
