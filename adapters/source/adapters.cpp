@@ -25,6 +25,30 @@ void MovableAdapter::setPosition(double position)
 	object->setProperty("position", std::to_string(position));
 }
 
+RotatingAdapter::RotatingAdapter(std::shared_ptr<IUObject> obj) : object(obj)
+{}
+
+double RotatingAdapter::getRotation()
+{
+	if(object->hasProperty("rotation")) {
+		return std::stod(object->getProperty("rotation"));
+	}
+	throw std::invalid_argument("can't get rotation");
+}
+
+double RotatingAdapter::getAngularVelocity()
+{
+	if(object->hasProperty("angularVelocity")) {
+		return std::stod(object->getProperty("angularVelocity"));
+	}
+	throw std::invalid_argument("can't get angular velocity");
+}
+
+void RotatingAdapter::setRotation(double rotation)
+{
+	object->setProperty("rotation", std::to_string(rotation));
+}
+
 VelocityAdapter::VelocityAdapter(std::shared_ptr<IUObject> obj) : object(obj)
 {}
 

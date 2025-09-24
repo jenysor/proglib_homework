@@ -94,6 +94,90 @@ TEST(TestMovableAdapter, MovableAdapter_GetVelocity_ErrorGetVelocity)
 	ASSERT_THROW(adapter.getVelocity(),std::invalid_argument);
 }
 
+TEST(TestRotatingAdapter, RotatingAdapter_SetRotation_Success)
+{
+	std::string property{"rotation"};
+	double value{11.4};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, setProperty(property, std::to_string(value)));
+
+	RotatingAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.setRotation(11.4));
+}
+
+TEST(TestRotatingAdapter, RotatingAdapter_GetRotation_Success)
+{
+	std::string property{"rotation"};
+	double value{11.4};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, hasProperty(property)).WillOnce(testing::Invoke([value]() {
+		return true;
+	}));
+
+	EXPECT_CALL(*object, getProperty(property)).WillOnce(testing::Invoke([value]() {
+		return std::to_string(value);
+	}));
+
+	RotatingAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.getRotation());
+}
+
+TEST(TestRotatingAdapter, RotatingAdapter_GetRotation_ErrorGetRotation)
+{
+	std::string property{"rotation"};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, hasProperty(property)).WillOnce(testing::Invoke([]() {
+		return false;
+	}));
+
+	RotatingAdapter adapter(object);
+
+	ASSERT_THROW(adapter.getRotation(),std::invalid_argument);
+}
+
+TEST(TestRotatingAdapter, RotatingAdapter_GetAngularVelocity_Success)
+{
+	std::string property{"angularVelocity"};
+	double value{11.4};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, hasProperty(property)).WillOnce(testing::Invoke([value]() {
+		return true;
+	}));
+
+	EXPECT_CALL(*object, getProperty(property)).WillOnce(testing::Invoke([value]() {
+		return std::to_string(value);
+	}));
+
+	RotatingAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.getAngularVelocity());
+}
+
+TEST(TestRotatingAdapter, RotatingAdapter_GetVelocity_ErrorGetAngularVelocity)
+{
+	std::string property{"angularVelocity"};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, hasProperty(property)).WillOnce(testing::Invoke([]() {
+		return false;
+	}));
+
+	RotatingAdapter adapter(object);
+
+	ASSERT_THROW(adapter.getAngularVelocity(),std::invalid_argument);
+}
+
 TEST(TestVelocityAdapter, VelocityAdapter_SetVelocity_Success)
 {
 	std::string property{"velocity"};

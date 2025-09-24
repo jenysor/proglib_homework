@@ -20,6 +20,22 @@ private:
 	std::shared_ptr<IUObject> object;
 };
 
+class RotatingAdapter : public IRotating {
+public:
+	explicit RotatingAdapter(std::shared_ptr<IUObject> obj);
+
+	double getRotation() override;
+
+	double getAngularVelocity() override;
+
+	void setRotation(double rotation) override;
+
+	~RotatingAdapter() override = default;
+
+private:
+	std::shared_ptr<IUObject> object;
+};
+
 class VelocityAdapter : public IVelocityChangeable {
 public:
 	explicit VelocityAdapter(std::shared_ptr<IUObject> obj);
