@@ -24,6 +24,17 @@ private:
 	std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> queue;
 };
 
+class EndMoveHandler : public IOrderHandler {
+public:
+	explicit EndMoveHandler(std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> queue);
+
+	void handleOrder(std::shared_ptr<IUObject> order, std::shared_ptr<IUObject> object) const override;
+
+	~EndMoveHandler() override = default;
+
+private:
+	std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> queue;
+};
 
 class StartRotateHandler : public IOrderHandler {
 public:
@@ -36,4 +47,17 @@ public:
 private:
 	std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> queue;
 };
+
+class EndRotateHandler : public IOrderHandler {
+public:
+	explicit EndRotateHandler(std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> queue);
+
+	void handleOrder(std::shared_ptr<IUObject> order, std::shared_ptr<IUObject> object) const override;
+
+	~EndRotateHandler() override = default;
+
+private:
+	std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> queue;
+};
+
 #endif // PROGLIB_HOMEWORK_ORDER_HANDLER_H

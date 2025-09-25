@@ -1,5 +1,9 @@
 #include "move_startable.h"
+#include "move_endable.h"
+#include "move_command.h"
 #include "rotate_startable.h"
+#include "rotate_endable.h"
+#include "rotate_command.h"
 #include "order_handler_pool.h"
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
@@ -57,6 +61,34 @@ TEST_F(TestOrderHandler, OrderHandler_HandleStartMoveCommand_Success)
 
 	ASSERT_TRUE(queue->size() == 1);
 	ASSERT_TRUE(dynamic_cast<StartMoveCommand*>(queue->front().get()));
+}
+
+TEST_F(TestOrderHandler, OrderHandler_HandleEndMoveCommand_Success)
+{
+	std::string actionProperty{"action"};
+	std::string action{"endMove"};
+
+	handlerPool->registerHandler(action, std::make_shared<EndMoveHandler>(queue));
+
+	auto order  = std::make_shared<MockUObject>();
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*order, hasProperty(actionProperty)).WillOnce(testing::Invoke([]() {
+		return true;
+	}));
+
+	EXPECT_CALL(*order, getProperty(actionProperty)).WillOnce(testing::Invoke([action]() {
+		return action;
+	}));
+
+	queue->push(std::make_shared<MoveCommand>(object));
+
+	handlerPool->handleOrder(order, object);
+
+	ASSERT_TRUE(queue->size() == 2);
+	ASSERT_TRUE(dynamic_cast<EndMoveCommand*>(queue->back().get()));
+}
+
 TEST_F(TestOrderHandler, OrderHandler_HandleStartRotateCommand_Success)
 {
 	std::string actionProperty{"action"};
@@ -91,4 +123,29 @@ TEST_F(TestOrderHandler, OrderHandler_HandleStartRotateCommand_Success)
 	ASSERT_TRUE(queue->size() == 1);
 	ASSERT_TRUE(dynamic_cast<StartRotateCommand*>(queue->front().get()));
 }
+
+TEST_F(TestOrderHandler, OrderHandler_HandleEndRotateCommand_Success)
+{
+	std::string actionProperty{"action"};
+	std::string action{"endRotate"};
+
+	handlerPool->registerHandler(action, std::make_shared<EndRotateHandler>(queue));
+
+	auto order  = std::make_shared<MockUObject>();
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*order, hasProperty(actionProperty)).WillOnce(testing::Invoke([]() {
+		return true;
+	}));
+
+	EXPECT_CALL(*order, getProperty(actionProperty)).WillOnce(testing::Invoke([action]() {
+		return action;
+	}));
+
+	queue->push(std::make_shared<RotateCommand>(object));
+
+	handlerPool->handleOrder(order, object);
+
+	ASSERT_TRUE(queue->size() == 2);
+	ASSERT_TRUE(dynamic_cast<EndRotateCommand*>(queue->back().get()));
 }
