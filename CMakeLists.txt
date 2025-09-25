@@ -25,6 +25,7 @@ file(GLOB_RECURSE SOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h )
 
 add_subdirectory(googletest)
+add_subdirectory(json)
 add_subdirectory(movable)
 add_subdirectory(rotating)
 add_subdirectory(adapters)
