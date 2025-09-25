@@ -24,4 +24,16 @@ private:
 	std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> queue;
 };
 
+
+class StartRotateHandler : public IOrderHandler {
+public:
+	explicit StartRotateHandler(std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> queue);
+
+	void handleOrder(std::shared_ptr<IUObject> order, std::shared_ptr<IUObject> object) const override;
+
+	~StartRotateHandler() override = default;
+
+private:
+	std::shared_ptr<std::queue<std::shared_ptr<ICommand>>> queue;
+};
 #endif // PROGLIB_HOMEWORK_ORDER_HANDLER_H

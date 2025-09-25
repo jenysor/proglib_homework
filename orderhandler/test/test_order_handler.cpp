@@ -1,4 +1,5 @@
 #include "move_startable.h"
+#include "rotate_startable.h"
 #include "order_handler_pool.h"
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
@@ -56,4 +57,38 @@ TEST_F(TestOrderHandler, OrderHandler_HandleStartMoveCommand_Success)
 
 	ASSERT_TRUE(queue->size() == 1);
 	ASSERT_TRUE(dynamic_cast<StartMoveCommand*>(queue->front().get()));
+TEST_F(TestOrderHandler, OrderHandler_HandleStartRotateCommand_Success)
+{
+	std::string actionProperty{"action"};
+	std::string action{"startRotate"};
+
+	handlerPool->registerHandler(action, std::make_shared<StartRotateHandler>(queue));
+
+	std::string angVelocityProperty{"angularVelocity"};
+	double angVelocity{11.4};
+
+	auto order  = std::make_shared<MockUObject>();
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*order, hasProperty(actionProperty)).WillOnce(testing::Invoke([]() {
+		return true;
+	}));
+
+	EXPECT_CALL(*order, getProperty(actionProperty)).WillOnce(testing::Invoke([action]() {
+		return action;
+	}));
+
+	EXPECT_CALL(*order, hasProperty(angVelocityProperty)).WillOnce(testing::Invoke([]() {
+		return true;
+	}));
+
+	EXPECT_CALL(*order, getProperty(angVelocityProperty)).WillOnce(testing::Invoke([angVelocity]() {
+		return std::to_string(angVelocity);
+	}));
+
+	handlerPool->handleOrder(order, object);
+
+	ASSERT_TRUE(queue->size() == 1);
+	ASSERT_TRUE(dynamic_cast<StartRotateCommand*>(queue->front().get()));
+}
 }
