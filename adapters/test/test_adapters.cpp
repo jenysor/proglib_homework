@@ -56,7 +56,7 @@ TEST(TestMovableAdapter, MovableAdapter_GetPosition_ErrorGetPosition)
 
 	MovableAdapter adapter(object);
 
-	ASSERT_THROW(adapter.getPosition(),std::invalid_argument);
+	ASSERT_THROW(adapter.getPosition(), std::invalid_argument);
 }
 
 TEST(TestMovableAdapter, MovableAdapter_GetVelocity_Success)
@@ -91,7 +91,7 @@ TEST(TestMovableAdapter, MovableAdapter_GetVelocity_ErrorGetVelocity)
 
 	MovableAdapter adapter(object);
 
-	ASSERT_THROW(adapter.getVelocity(),std::invalid_argument);
+	ASSERT_THROW(adapter.getVelocity(), std::invalid_argument);
 }
 
 TEST(TestRotatingAdapter, RotatingAdapter_SetRotation_Success)
@@ -140,7 +140,7 @@ TEST(TestRotatingAdapter, RotatingAdapter_GetRotation_ErrorGetRotation)
 
 	RotatingAdapter adapter(object);
 
-	ASSERT_THROW(adapter.getRotation(),std::invalid_argument);
+	ASSERT_THROW(adapter.getRotation(), std::invalid_argument);
 }
 
 TEST(TestRotatingAdapter, RotatingAdapter_GetAngularVelocity_Success)
@@ -175,7 +175,7 @@ TEST(TestRotatingAdapter, RotatingAdapter_GetVelocity_ErrorGetAngularVelocity)
 
 	RotatingAdapter adapter(object);
 
-	ASSERT_THROW(adapter.getAngularVelocity(),std::invalid_argument);
+	ASSERT_THROW(adapter.getAngularVelocity(), std::invalid_argument);
 }
 
 TEST(TestVelocityAdapter, VelocityAdapter_SetVelocity_Success)
@@ -224,7 +224,7 @@ TEST(TestVelocityAdapter, VelocityAdapter_GetVelocity_ErrorGetVelocity)
 
 	VelocityAdapter adapter(object);
 
-	ASSERT_THROW(adapter.getVelocity(),std::invalid_argument);
+	ASSERT_THROW(adapter.getVelocity(), std::invalid_argument);
 }
 
 TEST(TestVelocityAdapter, VelocityAdapter_RemoveVelocity_Success)
@@ -273,7 +273,7 @@ TEST(TestFuelAdapter, FuelAdapter_GetFuel_ErrorGetFuel)
 
 	FuelAdapter adapter(object);
 
-	ASSERT_THROW(adapter.getFuel(),std::invalid_argument);
+	ASSERT_THROW(adapter.getFuel(), std::invalid_argument);
 }
 
 TEST(TestFuelAdapter, FuelAdapter_SetFuel_Success)
@@ -336,7 +336,7 @@ TEST(TestInstantVelocityAdapter, InstantVelocityAdapter_GetInstantVelocity_Error
 
 	InstantVelocityAdapter adapter(object);
 
-	ASSERT_THROW(adapter.getInstantVelocity(),std::invalid_argument);
+	ASSERT_THROW(adapter.getInstantVelocity(), std::invalid_argument);
 }
 
 TEST(TestInstantVelocityAdapter, InstantVelocityAdapter_SetInstantVelocity_Success)
@@ -412,7 +412,7 @@ TEST(TestAngularVelocityAdapter, AngularVelocityAdapter_GetAngularVelocity_Error
 
 	AngularVelocityAdapter adapter(object);
 
-	ASSERT_THROW(adapter.getAngularVelocity(),std::invalid_argument);
+	ASSERT_THROW(adapter.getAngularVelocity(), std::invalid_argument);
 }
 
 TEST(TestAngularVelocityAdapter, AngularVelocityAdapter_SetAngularVelocity_Success)
@@ -440,4 +440,67 @@ TEST(TestAngularVelocityAdapter, AngularVelocityAdapter_RemoveAngularVelocity_Su
 	AngularVelocityAdapter adapter(object);
 
 	ASSERT_NO_THROW(adapter.removeAngularVelocity());
+}
+
+TEST(TestActionAdapter, ActionAdapter_GetAction_Success)
+{
+	std::string property{"action"};
+	std::string value{"startMove"};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, hasProperty(property)).WillOnce(testing::Invoke([]() {
+		return true;
+	}));
+
+	EXPECT_CALL(*object, getProperty(property)).WillOnce(testing::Invoke([value]() {
+		return value;
+	}));
+
+	ActionAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.getAction());
+}
+
+TEST(TestActionAdapter, ActionAdapter_GetAction_ErrorGetAction)
+{
+	std::string property{"action"};
+	std::string value{"startMove"};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, hasProperty(property)).WillOnce(testing::Invoke([]() {
+		return false;
+	}));
+
+	ActionAdapter adapter(object);
+
+	ASSERT_THROW(adapter.getAction(),std::invalid_argument);
+}
+
+TEST(TestActionAdapter, ActionAdapter_SetAction_Success)
+{
+	std::string property{"action"};
+	std::string value{"startMove"};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, setProperty(property, value));
+
+	ActionAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.setAction(value));
+}
+
+TEST(TestActionAdapter, ActionAdapter_RemoveAction_Success)
+{
+	std::string property{"action"};
+
+	auto object = std::make_shared<MockUObject>();
+
+	EXPECT_CALL(*object, removeProperty(property));
+
+	ActionAdapter adapter(object);
+
+	ASSERT_NO_THROW(adapter.removeAction());
 }

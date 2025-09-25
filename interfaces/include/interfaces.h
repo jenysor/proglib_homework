@@ -90,4 +90,15 @@ public:
 	virtual ~IAngularVelocityChangeable() = default;
 };
 
+class IActionAdapter {
+public:
+	virtual void setAction(const std::string& action) = 0;
+
+	virtual std::string getAction() const = 0;
+
+	virtual void removeAction() = 0;
+
+	virtual ~IActionAdapter() = default;
+};
+
 #endif // PROGLIB_HOMEWORK_INTERFACES_H

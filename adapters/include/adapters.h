@@ -92,4 +92,18 @@ private:
 	std::shared_ptr<IUObject> object;
 };
 
+class ActionAdapter : public IActionAdapter {
+public:
+	explicit ActionAdapter(std::shared_ptr<IUObject> obj);
+
+	void setAction(const std::string& action) override;
+
+	std::string getAction() const override;
+
+	void removeAction() override;
+
+private:
+	std::shared_ptr<IUObject> object;
+};
+
 #endif // PROGLIB_HOMEWORK_ADAPTERS_H

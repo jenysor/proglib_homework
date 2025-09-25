@@ -137,3 +137,24 @@ void AngularVelocityAdapter::removeAngularVelocity()
 {
 	object->removeProperty("angularVelocity");
 }
+
+ActionAdapter::ActionAdapter(std::shared_ptr<IUObject> obj) : object(std::move(obj))
+{}
+
+void ActionAdapter::setAction(const std::string& action)
+{
+	object->setProperty("action", action);
+}
+
+std::string ActionAdapter::getAction() const
+{
+	if(object->hasProperty("action")) {
+		return object->getProperty("action");
+	}
+	throw std::invalid_argument("can't get action");
+}
+
+void ActionAdapter::removeAction()
+{
+	object->removeProperty("action");
+}
