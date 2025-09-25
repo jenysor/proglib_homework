@@ -8,6 +8,8 @@ class OrderHandlerPool {
 public:
 	void registerHandler(const std::string& action, std::shared_ptr<IOrderHandler> handler);
 
+	void handleOrder(std::shared_ptr<IUObject> order, std::shared_ptr<IUObject> object) const;
+
 private:
 	std::map<std::string, std::shared_ptr<IOrderHandler>> handlers;
 };
