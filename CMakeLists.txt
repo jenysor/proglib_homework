@@ -34,6 +34,7 @@ add_subdirectory(equations)
 add_subdirectory(exceptionhandler)
 add_subdirectory(macrocommand)
 add_subdirectory(fuelcommands)
+add_subdirectory(orderhandler)
 
 add_executable(${PROJECT_NAME}_main main.cpp)
 target_link_libraries(${PROJECT_NAME}_main PUBLIC movable rotating adapters)
