@@ -68,6 +68,7 @@ jobs:
           --filter ${{ github.workspace }}/exceptionhandler/ \
           --filter ${{ github.workspace }}/macrocommand/ \
           --filter ${{ github.workspace }}/fuelcommands/ \
+          --filter ${{ github.workspace }}/orderhandler/ \
           --exclude '.*test*' \
           --root ${{ github.workspace }} \
           --html-details coverage_report/coverage_report.html \
